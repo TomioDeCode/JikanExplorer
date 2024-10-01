@@ -5,10 +5,10 @@ import NavTitle from "../fragments/NavTitle";
 import { AiOutlineHome, AiOutlineDiscord } from "react-icons/ai";
 import { BsCompass, BsClock, BsFolder2Open, BsDownload } from "react-icons/bs";
 import { TbSettings, TbHelpHexagon, TbLogout } from "react-icons/tb";
-import LogoContainer from "../fragments/LogoContainer";
+import LogoContainer from "../fragments/LogoBox";
 import { Button } from "../ui/button";
 
-const NavContainer = () => {
+const NavBox = () => {
   return (
     <nav className="mt-5 flex flex-col space-y-6 px-4">
       <LogoContainer />
@@ -64,4 +64,4 @@ const NavContainer = () => {
   );
 };
 
-export default NavContainer;
+export default NavBox;
