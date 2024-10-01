@@ -1,5 +1,6 @@
 import MainBox from "@/components/ellements/MainBox";
 import NavBox from "@/components/ellements/NavBox";
+import RightBox from "@/components/ellements/RightBox";
 import React from "react";
 
 const Page = () => {
@@ -12,7 +13,7 @@ const Page = () => {
         <MainBox />
       </div>
       <div className="bg-foreground w-[30%] p-5">
-        <h2 className="text-2xl text-white">Right Sidebar</h2>
+        <RightBox />
       </div>
     </div>
   );
