@@ -8,7 +8,7 @@ interface NavInterface {
 const NavIcon = ({ children, className }: NavInterface) => {
   return (
     <div
-      className={`flex items-center justify-center rounded-full p-2 transition-transform duration-300 ${className}`}
+      className={`flex items-center justify-center rounded-full p-1 transition-transform duration-300 ${className}`}
     >
       {children}
     </div>

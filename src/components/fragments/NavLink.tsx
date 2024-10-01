@@ -20,16 +20,16 @@ const NavLink = ({ children, href, text }: NavLinkInterface) => {
     <div>
       <Link
         href={href}
-        className={`flex items-center space-x-3 p-3 rounded-lg transition-all duration-300 
+        className={`flex items-center space-x-3 p-1 rounded-lg transition-all duration-300 
           ${
             isActive
               ? "text-primary bg-gray-800 shadow-lg"
               : "text-white hover:bg-gray-700"
-          } 
-          capitalize font-semibold`}
+          }
+          capitalize font-medium`}
       >
-        <NavIcon className="font-bold text-[32px]">{children}</NavIcon>
-        <span className="text-[20px]">{text}</span>
+        <NavIcon className="font-bold text-[25px]">{children}</NavIcon>
+        <span className="text-[15px]">{text}</span>
       </Link>
     </div>
   );
