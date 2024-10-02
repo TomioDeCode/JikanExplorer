@@ -1,61 +1,18 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-interface Anime {
-  mal_id: number;
-  title: string;
-  imageUrl: string;
-}
+import useTopAnimeStore from "@/store/useTopAnimeStore";
 
 const TopCard = () => {
-  const [topAnime, setTopAnime] = useState<Anime[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-
-  const fetchTopAnime = async (retryCount = 0, maxRetries = 3) => {
-    try {
-      const response = await fetch(`${API_URL}/top/anime`);
-
-      if (response.status === 429) {
-        if (retryCount < maxRetries) {
-          const retryDelay = Math.pow(2, retryCount) * 1000; // Exponential backoff
-          console.warn(`Retrying in ${retryDelay / 1000} seconds...`);
-          setTimeout(() => fetchTopAnime(retryCount + 1), retryDelay);
-          return;
-        } else {
-          throw new Error("Too many requests. Please try again later.");
-        }
-      }
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch top anime");
-      }
-
-      const data = await response.json();
-      const animeData = data.data.slice(0, 3).map((item: any) => ({
-        mal_id: item.mal_id,
-        title: item.title,
-        imageUrl: item.images.jpg.image_url,
-      }));
-
-      setTopAnime(animeData);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred");
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { topAnime, loading, error, fetchTopAnime } = useTopAnimeStore();
 
   useEffect(() => {
-    fetchTopAnime(); // Initial fetch
-  }, []);
+    if (topAnime.length === 0) {
+      fetchTopAnime();
+    }
+  }, [topAnime, fetchTopAnime]);
 
   if (loading) {
     return <p className="text-white">Loading top anime...</p>;
@@ -83,7 +40,11 @@ const TopCard = () => {
 };
 
 interface AnimeCardProps {
-  anime: Anime;
+  anime: {
+    mal_id: number;
+    title: string;
+    imageUrl: string;
+  };
 }
 
 const AnimeCard = ({ anime }: AnimeCardProps) => {

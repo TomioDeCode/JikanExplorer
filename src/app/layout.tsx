@@ -1,10 +1,10 @@
-import { Fira_Code } from "next/font/google";
+import { ABeeZee } from "next/font/google";
 import type { Metadata } from "next";
 import "./globals.css";
 
-const FiraCodeFont = Fira_Code({
-  subsets: ["cyrillic"],
-  weight: ["300", "400", "500", "600", "700"],
+const FiraCodeFont = ABeeZee({
+  subsets: ["latin"],
+  weight: "400",
 });
 
 export const metadata: Metadata = {

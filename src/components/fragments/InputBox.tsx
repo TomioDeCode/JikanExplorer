@@ -77,11 +77,10 @@ const InputBox = () => {
       {loading && <p className="text-white">Loading...</p>}
       {error && <p className="text-red-500">{error}</p>}
 
-      {/* Overlay hasil pencarian */}
       {showOverlay && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 transition-opacity duration-300"
-          onClick={handleOverlayClose} // Klik di luar overlay untuk menutup
+          onClick={handleOverlayClose}
         >
           <div
             className="bg-gray-800 p-6 rounded-lg shadow-lg w-[400px] max-h-[400px] overflow-y-auto transform transition-transform duration-300"
@@ -93,7 +92,7 @@ const InputBox = () => {
               </h2>
               <button
                 className="text-white hover:text-red-500 focus:outline-none transition-all duration-300"
-                onClick={handleOverlayClose} // Tombol untuk menutup overlay
+                onClick={handleOverlayClose}
               >
                 Close
               </button>

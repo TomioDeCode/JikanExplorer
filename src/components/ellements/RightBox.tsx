@@ -7,7 +7,7 @@ const RightBox = () => {
   return (
     <div className="space-y-8 p-5 bg-gray-900 rounded-lg shadow-md max-w-md mx-auto">
       <div className="w-full">
-        <IconsBox />
+        <IconsBox title="Search Anime" />
       </div>
       <div className="relative">
         <InputBox />
