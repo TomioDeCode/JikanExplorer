@@ -1,29 +1,29 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { create } from "zustand";
 
-interface Anime {
-  mal_id: number;
+interface Movie {
+  id: number;
   title: string;
   imageUrl: string;
 }
 
-interface TopAnimeStore {
-  topAnime: Anime[];
+interface TopMovieStore {
+  topMovies: Movie[];
   loading: boolean;
   error: string | null;
-  fetchTopAnime: (retryCount?: number) => Promise<void>;
+  fetchTopMovies: (retryCount?: number) => Promise<void>;
 }
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-const useTopAnimeStore = create<TopAnimeStore>((set) => ({
-  topAnime: [],
+const useTopMovieStore = create<TopMovieStore>((set) => ({
+  topMovies: [],
   loading: true,
   error: null,
-  fetchTopAnime: async (retryCount = 0) => {
+  fetchTopMovies: async (retryCount = 0) => {
     set({ loading: true, error: null });
     try {
-      const response = await fetch(`${API_URL}/top/anime`);
+      const response = await fetch(`${API_URL}/anime?type=movie`);
 
       if (response.status === 429) {
         if (retryCount < 3) {
@@ -31,7 +31,7 @@ const useTopAnimeStore = create<TopAnimeStore>((set) => ({
           console.warn(`Retrying in ${retryDelay / 1000} seconds...`);
 
           setTimeout(() => {
-            useTopAnimeStore.getState().fetchTopAnime(retryCount + 1);
+            useTopMovieStore.getState().fetchTopMovies(retryCount + 1);
           }, retryDelay);
           return;
         } else {
@@ -40,17 +40,17 @@ const useTopAnimeStore = create<TopAnimeStore>((set) => ({
       }
 
       if (!response.ok) {
-        throw new Error("Failed to fetch top anime");
+        throw new Error("Failed to fetch top movies");
       }
 
       const data = await response.json();
-      const animeData = data.data.slice(0, 6).map((item: any) => ({
-        mal_id: item.mal_id,
+      const movieData = data.data.slice(0, 6).map((item: any) => ({
+        id: item.id,
         title: item.title,
         imageUrl: item.images.jpg.image_url,
       }));
 
-      set({ topAnime: animeData });
+      set({ topMovies: movieData });
     } catch (err) {
       set({ error: err instanceof Error ? err.message : "An error occurred" });
     } finally {
@@ -59,4 +59,4 @@ const useTopAnimeStore = create<TopAnimeStore>((set) => ({
   },
 }));
 
-export default useTopAnimeStore;
+export default useTopMovieStore;

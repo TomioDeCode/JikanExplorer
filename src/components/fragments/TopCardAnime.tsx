@@ -24,7 +24,7 @@ const TopCard = () => {
 
   return (
     <div className="p-4 bg-gray-800 rounded-lg shadow-md max-w-lg mx-auto">
-      <h2 className="text-2xl font-semibold text-white mb-3">Top Anime</h2>
+      <h2 className="text-2xl font-semibold text-white mb-3">Top Animes</h2>
       <div className="space-y-4">
         {topAnime.map((anime) => (
           <AnimeCard key={anime.mal_id} anime={anime} />
@@ -48,6 +48,10 @@ interface AnimeCardProps {
 }
 
 const AnimeCard = ({ anime }: AnimeCardProps) => {
+  const truncateText = (text: string, maxLength: number) => {
+    return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
+  };
+
   return (
     <div className="flex items-center space-x-4 p-3 bg-gray-700 rounded-lg shadow-sm">
       <Image
@@ -57,7 +61,10 @@ const AnimeCard = ({ anime }: AnimeCardProps) => {
         width={40}
         height={40}
       />
-      <h3 className="text-lg font-semibold text-white">{anime.title}</h3>
+      <h3 className="text-lg font-semibold text-white">
+        {truncateText(anime.title, 20)}
+      </h3>{" "}
+      {/* Truncate title here */}
     </div>
   );
 };

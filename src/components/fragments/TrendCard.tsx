@@ -50,13 +50,13 @@ const TrendCard = () => {
               <Image
                 src={anime.imageUrl}
                 alt={anime.title}
-                width={200}
-                height={400}
-                className="w-full h-[250px] object-cover"
+                width={1000}
+                height={1000}
+                className="w-full h-[330px] object-cover"
               />
               <div className="p-4">
                 <h2 className="text-base font-bold">
-                  {truncateText(anime.title, 6)}
+                  {truncateText(anime.title, 20)}
                 </h2>{" "}
               </div>
             </div>

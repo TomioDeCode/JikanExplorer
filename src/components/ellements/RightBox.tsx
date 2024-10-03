@@ -1,20 +1,25 @@
+"use client";
+
 import React from "react";
 import IconsBox from "../fragments/IconsBox";
-import InputBox from "../fragments/InputBox";
-import TopCard from "../fragments/TopCard";
+import TopCard from "../fragments/TopCardAnime";
+import { usePathname } from "next/navigation";
+import TopMovieCard from "../fragments/TopCardMovie";
 
 const RightBox = () => {
+  const pathName = usePathname();
+
+  const isPath = pathName === "/discovery"
+
   return (
-    <div className="space-y-8 p-5 bg-gray-900 rounded-lg shadow-md max-w-md mx-auto">
+    <div className="space-y-5 p-5 bg-gray-900 rounded-lg shadow-md max-w-md mx-auto">
       <div className="w-full">
-        <IconsBox title="Search Anime" />
+        {isPath ? <IconsBox title="Search Animes" /> : <IconsBox title="Home" />}
       </div>
-      <div className="relative">
+      {/* <div className="relative">
         <InputBox />
-      </div>
-      <div>
-        <TopCard />
-      </div>
+      </div> */}
+      <div>{isPath ? <TopMovieCard /> : <TopCard />}</div>
     </div>
   );
 };

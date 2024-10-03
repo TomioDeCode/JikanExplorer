@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import useAnimeStore from "@/store/useAnimeStore";
+import { Button } from "../ui/button";
 
 const SearchMain = () => {
   const {
@@ -18,7 +19,6 @@ const SearchMain = () => {
   } = useAnimeStore();
 
   const itemsPerPage = 6;
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (animeData.length === 0) {
@@ -26,18 +26,18 @@ const SearchMain = () => {
     }
   }, [animeData.length, fetchAnimeData]);
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const searchValue = e.target.value;
-    setSearchTerm(searchValue);
-    setCurrentPage(1);
-
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
+  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    if (e.target.value.length === 0) {
+      fetchAnimeData();
     }
+  };
 
-    timeoutRef.current = setTimeout(() => {
-      fetchAnimeData(searchValue);
-    }, 500);
+  console.log(handleSearchInputChange)
+
+  const handleSearchClick = () => {
+    setCurrentPage(1);
+    fetchAnimeData();
   };
 
   const totalPages = Math.ceil(animeData.length / itemsPerPage);
@@ -46,22 +46,25 @@ const SearchMain = () => {
     currentPage * itemsPerPage
   );
 
-  if (loading)
-    return (
-      <p className="text-white text-center text-lg">Loading...</p>
-    );
-  if (error) return <p className="text-red-500 text-center text-lg">{error}</p>;
+  if (loading) {
+    return <p className="text-white text-center text-lg">Loading...</p>;
+  }
+  if (error) {
+    return <p className="text-red-500 text-center text-lg">{error}</p>;
+  }
 
   return (
     <div className="max-w-6xl mx-auto px-4">
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-4 flex items-center justify-between space-x-3">
         <input
           type="text"
           placeholder="Search anime..."
           value={searchTerm}
-          onChange={handleSearch}
-          className="w-full mr-4 p-2 rounded bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600"
+          onChange={handleSearchInputChange}
+          className="w-full p-2 rounded bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600"
         />
+        <Button onClick={handleSearchClick}>Search</Button>{" "}
+        {/* Trigger search on click */}
         <div className="flex items-center">
           <button
             onClick={() => setCurrentPage(Math.max(currentPage - 1, 1))}
