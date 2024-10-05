@@ -2,6 +2,7 @@
 
 import React, { useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import useRekomendAnimeStore from "@/store/useRekomendAnimeStore";
 
 const RekomendCard = () => {
@@ -30,13 +31,15 @@ const RekomendCard = () => {
             key={mal_id}
             className="bg-gray-900 text-white rounded-lg overflow-hidden"
           >
-            <Image
-              src={imageUrl}
-              alt={title}
-              width={200}
-              height={300}
-              className="w-full h-[300px] object-fill"
-            />
+            <Link href={`/anime/${mal_id}`}>
+              <Image
+                src={imageUrl}
+                alt={title}
+                width={200}
+                height={300}
+                className="w-full h-[300px] object-fill"
+              />
+            </Link>
             <div className="p-2">
               <h3 className="text-lg font-bold">{truncateTitle(title, 15)}</h3>
             </div>
